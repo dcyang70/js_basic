@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //1.expression
+        let temp1 = 0;
+        let temp2 = 0;
+        for (var i = 1; i < 51; i = i + 2)
+            temp1 += i ** 2;
+        for (var i = 2; i < 51; i = i + 2)
+            temp2 += i ** 2 * -1;
+        document.write(`${temp1 + temp2}<br><hr>`);
+
+        //2.factors
+        let num = 100;
+        document.write(`(1, ${num}), `);
+        let sqrtInt = parseInt(num ** 0.5);
+        let results = [];
+        for (let i = 2; i <= sqrtInt; i++) {
+            if (num % i == 0)
+                if (num / i != i)
+                    document.write(`(${i}, ${num / i}), `);
+                else
+                    document.write(`${i}, `);
+        }
+        document.write("<hr>");
+
+        //3.perfect number  < 100
+        document.write("1 ");
+        let total = 0;
+        sqrtInt = 0;
+        for (let num = 4; num < 101; num++) {
+            sqrtInt = parseInt(num ** 0.5);
+            //document.write(`${sqrtInt} `);
+            total = 0;
+            for (let i = 2; i <= sqrtInt; i++)
+                if (num % i == 0) {
+                    total += i;
+                    if (i != num / i) {
+                        total += num / i;
+                    }
+                }
+            //console.log("com:",num, total)
+            if (num == total + 1)
+                document.write(`${num} `);
+        }
+        document.write("<hr>");
+
+        //4. amstrong
+        let temp3 = 0;
+        temp2 = 0;
+        temp1 = 0
+        for (let num = 104; num < 970; num++) {
+            temp2 = parseInt(num / 10);
+            temp3 = parseInt(temp2 / 10);
+            temp2 = temp2 % 10;
+            temp1 = num % 10;
+            if (num == (temp3 ** 3 + temp2 ** 3 + temp1 ** 3))
+                document.write(`${num} `);
+        }
+        document.write("<hr>");
+
+        //5. prime
+        base = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
+        let input = 200;
+        let last = base[base.length - 1]
+        sqrtInt = 0
+        if (input <= last)
+            base.forEach(element => {
+                if (input >= element)
+                    document.write(`${element} `);
+                else
+                    return;
+            });
+        else {
+            results = Array.from(base)
+            console.log(results.toString())
+            let isPrime = true
+            for (let num = last + 2; num <= input; num = num + 2) {
+                sqrtInt = parseInt(num ** 0.5);
+                results.forEach(element => {
+                    //console.log(num, "element",)
+                    if (num % element == 0) {
+                        isPrime = false;
+                        //console.log(isPrime)
+                        return;
+                    }
+                });
+                if (isPrime) {
+                    results.push(num);
+                } else isPrime = true;
+            }
+            document.write(results.toString());
+        }
+        document.write("<hr>");
+
+        //6. rope
+        let length = 3000
+        let day = 0
+        while (length > 5) {
+            length /= 2;
+            day += 1;
+        }
+        document.write(`${day}<br><hr>`);
+
+
+        //7. rabbit
+        let count = 9
+        while (count % 3 != 1 || count % 5 != 3)
+            count += 7;
+        document.write(`${count}`);
+
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

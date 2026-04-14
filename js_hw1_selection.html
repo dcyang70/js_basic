@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //1.
+        let month = 9;
+        let season = "input error"
+        document.write(`${parseInt(11/3)}`, "<br>");
+        if (0 < month && month <= 12)
+            //3,4,5 6,7,8, 9, 10, 11 
+            switch (parseInt(month/3)) {
+                case 1:
+                    season = "Spring"      
+                    break;
+                case 2:
+                    season = "Summer"
+                    break;
+                case 3:
+                    season = "Autumn"
+                    break;
+                default:    
+                    searon = "Winter"
+                    break;
+            }
+        document.write(`${season} <br>`);
+
+
+        //2.
+        let workingHours = 88;
+        const BASE = 120, TIME1 = 1.25, TIME2 = 1.5;
+
+        if ( workingHours < 0 )
+            workingHours = 0;
+
+        // total = 0 直接用, 不宣告, 不推 
+        let total = 0;
+        
+        if (workingHours > 80)
+            total = (workingHours - 80)*TIME2 + 20*TIME1 + 60;
+        else if (workingHours > 60)
+            total = (workingHours - 60)*TIME1 + 60;
+        else
+            total = workingHours
+
+        document.write(`總計: ${total*120} 元`, "<br>")
+
+        //3.
+        let years = 2400;
+        let leapYearDesc = 'is not';
+        if (years % 4 == 0)
+            if (years % 100 != 0 || years % 400 == 0)
+                leapYearDesc = 'is';
+        document.write(`${years} ${leapYearDesc} leap year.<br>`)
+
+
+        //4.
+        let paid = 300;
+        let totalAmount = 123;
+        let bills = [1000, 500, 100, 50, 10, 5] //1
+        let papers = 0;
+        let msg = "應找回";
+        if (paid < 0 || totalAmount < 0)
+            document.write(`paid ${paid}, total ${totalAmount} must be > 0`)
+        else {
+            if (paid < totalAmount)
+                document.write('金額不足<br>')
+            else if (paid == totalAmount)
+                document.write('不必找錢<br>')
+            else{
+                let change = paid - totalAmount;
+                for (let i=0; i < bills.length; i++)
+                    if (change >= bills[i]) {
+                        papers = parseInt( change/ bills[i])
+                        msg += ` ${bills[i]}元 ${papers}張,`
+                        change -= (bills[i] * papers)
+                    }
+                if (change != 0)
+                    msg += ` 1元 ${change}個,`
+                document.write(msg, "<br>")
+            }
+        }
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
