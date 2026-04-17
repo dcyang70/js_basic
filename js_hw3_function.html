@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="util.js"></script>
+    <script>
+        /*使用亂數產生驗証碼，分別使用三個函式完成-verify
+        產生四個數字，可以重覆
+        產生四個數字，不可以重覆
+        產生六個由數字和大寫英文字母組成
+        */
+
+        function getCharGroupsWith(len, canRepeat, ...outTypes) {
+            //console.log(len, canRepeat, outTypes);
+            let ary = [];
+            let idx = 0;
+            let temp = 0;
+            //let temp1 = 0;
+            let cTemp;
+            while (len > 0) {
+                if (outTypes.length > 1)
+                    idx = Math.floor(Math.random()* outTypes.length );
+                console.log("idx", idx);
+                if ( outTypes[idx] === "num") {
+                    temp =  Math.floor(Math.random()*10) + 48;
+                    //temp1 = temp + 48;
+                } else if ( outTypes[idx] === "a" || outTypes[idx] === "A") {
+
+                    temp = Math.floor(Math.random()*26) + 65;
+                    //temp1 = temp + 65;
+                } else
+                    continue;
+                
+                cTemp = String.fromCharCode(temp)
+                if (!canRepeat)
+                    if (ary.indexOf(cTemp)!= -1)
+                        continue;
+                //console.log("before push:",outTypes[idx],  cTemp, temp, temp1);
+                ary.push(cTemp);
+                len--;
+            }
+            //console.log(ary);
+            return ary;
+        }
+        document.write(getCharGroupsWith(4, true, "num"),"<br>");
+        document.write(getCharGroupsWith(4, false, "num"),"<br>");
+        document.write(getCharGroupsWith(6, true, "num","A"),"<br>");
+        document.write("<hr>");
+
+        /*  
+        寫一函式檢查身分證號碼是否正確-chkID
+        程式邏輯如下：
+        檢查是否有十個字元，超過十個字元不准輸入
+        檢查第一個字元是否為英文字母，若為小寫將其轉換成大寫
+        檢查第二個字元是否為1或2數字
+        檢查第三個至第十個字元是否為數字
+        檢查最後一個檢查碼是否正確
+
+        0~7 24 8~12 25 13~19 22 20 21 23
+        0~7 8  9~13 14 15~21 22 23 24 25
+        0 16 -1   11 -2    0  -3 -3  2
+        */
+        let chBases = [8,9, 14,15,22,23,25,26];
+        let chOps =   [10,26,9,21,8,0, 7,8];
+
+        let idCkBase = [1, 9, 8, 7, 6, 5, 4, 3, 2, 1, 1];
+
+        function checkIdWith(idStr){
+            let newIdStr = idStr.toUpperCase(); 
+            let first = newIdStr[0];
+            if (first < 'A' || first > 'Z') {
+                console.log("first", first);
+                return false;
+            }
+            if (isNaN(idStr.substring(1)) ) {
+                console.log("id substring", idStr.substring(1));
+                return false;
+            }
+            if (idStr[1] < '1' || idStr[1] > '2'){
+                console.log("gender", idStr[1]);
+                return false;
+            }  
+            let code = first.charCodeAt(0) - 'A'.charCodeAt(0);
+            for (let i in chBases){
+                if (code/chBases[i] < 1) {
+                    code += chOps[i];
+                    break;
+                } 
+            }
+            newIdStr = newIdStr.replace(first, code);
+            console.log("new idstr", first, code, newIdStr, idStr);
+            //let ckStr = `${code}${idStr.substring(1)}`
+            let total = 0;
+            for (let i = 0; i< newIdStr.length; i++)
+                total += newIdStr[i] * idCkBase[i];
+            return total % 10 == 0
+        }
+
+        document.write(checkIdWith("o323456789"));
+        document.write("<hr>");
+
+        /*
+        日期的練習-MyCalendar
+        給兩個整數，第一個數字代表那一年，第二個數字代表那一月，列印出那一年那一月的月曆。
+        提示：找出那年那個月1日是星期幾
+        */
+        function printOneMonth(year, month){
+            let realMon = month-1;
+            let d1 = new Date(year, realMon, 1);
+            let d2;
+            if (realMon == 11)
+                d2 = new Date (year+1, 0, 1);
+            else 
+                d2 = new Date (year, realMon+1, 1);
+
+            w1 = d1.getDay();
+            w2 = d2.getDay();
+            document.write("<tr>");
+            if (w1 > 0)
+                for (let i = 0; i < w1; i++)
+                    document.write("<td/>");
+            let theDate = 0;
+            console.log(d2);
+            while( ++theDate ){
+                if (w1 % 7 == 0) {
+                    document.write("</tr><tr>");
+                    w1 = 0;
+                }
+                if (theDate >= 28 && w1 == w2) 
+                    break;
+                w1++;
+                document.write( `<td>${theDate}</td>`);
+
+                //怕無限loop, 測試時打開
+                //if (theDate == 40)
+                //    break;
+            }
+        }
+        year = 2026;
+        date = 1
+        document.write(`${year}年${date}月<br>`);
+        document.write(`<table><tr>`);
+        let weekNames = [" Sun."," Mon."," Tue."," Wed."," Thu."," Fri."," Sat."];
+        for (let wn of weekNames)
+            document.write(`<th>${wn}</th>`);
+        
+        printOneMonth(year,date);
+
+        document.write(`</table>`);
+        document.write("<hr>");
+
+        //幾歲
+        function getYrsFrom(year, mon, dat){
+            today = new Date();
+            oldDay = new Date(year, mon-1, dat);
+            deltaToday = today - new Date(today.getFullYear(),0,1);
+            deltaOldDay = oldDay - new Date(year,0,1);
+            deltaYrs = today.getFullYear() - oldDay.getFullYear();
+            return deltaToday > deltaOldDay ? deltaYrs : deltaYrs-1;  
+        }
+
+        document.write("The years old of (1965,4,18) is ", Math.floor(getYrsFrom(1965,4,18)));
+
+
+        //拿掉var z=20, 會看到hoisting -> var 提升到函數最上方的效果, 相當於
+        /* var z;
+           z = 10
+           z = 20
+        */
+        function vartest(){
+            z = 10;
+            //var z=20;
+
+            console.log(z)
+        }
+        vartest()
+        console.log("out", z)
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

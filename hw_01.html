@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <img name="shown" src="images/01.jpg"/>
+    <br>
+	<button onClick="clearInterval(timerID)">停止</button>
+    <button onClick="startCount()">計時開始</button>
+    <br>
+
+    <script>
+
+        imgs = ["images/01.jpg", "images/02.jpg", "images/03.jpg", "images/04.jpg", "images/05.jpg"]
+        function startCount() {
+            idx = 0;
+            timerID = setInterval(count, 2000);
+
+            /*timerID = setInterval(function () {
+                num.innerHTML = ++sec;
+            }, 1000);*/
+        }
+
+        function count() {
+            //num.innerHTML = ++sec;
+            console.log(idx);
+            document.shown.src = imgs[++idx];
+            if (idx >= imgs.length-1)
+                idx = 0; 
+        }
+    </script>
+</body>
+</html>

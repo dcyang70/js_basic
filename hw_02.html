@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	選一個日期：
+    <!-- <option value="None">請選擇
+		<option value="Monday">星期一
+		<option value="Tuesday">星期二
+		<option value="Wednesday">星期三
+		<option value="Thursday">星期四
+		<option value="Friday">星期五
+		<option value="Saturday">星期六
+		<option value="Sunday">星期日 -->
+	<select id="tenday" onchange="show()">
+	</select>
+	<script>
+        let theDate = new Date()
+        let dateStr = ""
+        let optEle;
+        let textEle;
+        selectRoot = document.querySelector("#tenday")
+        for (let i=0; i<10; i++) {
+            dateStr = theDate.getFullYear() +"-"+String(theDate.getMonth()+1).padStart(2,'0');
+            dateStr += "-" + String(theDate.getDate()).padStart(2,'0');
+            textEle = document.createTextNode(dateStr);
+            optEle =  document.createElement("option")
+            optEle.value=dateStr;
+            optEle.appendChild(textEle);
+            selectRoot.appendChild(optEle);
+            theDate.setDate(theDate.getDate()+1);
+        }
+
+
+    	/*var h3 = document.createElement("h3");
+		h3.setAttribute("id", "hello")
+		h3.innerHTML = "Hello World!!"
+		var body = document.querySelector("body");
+		body.appendChild(h3);
+		
+		var div = document.createElement("div");
+		var text = document.createTextNode(
+			document.querySelector("#hello").innerHTML
+			+ " " + new Date().getFullYear());
+		div.appendChild(text);
+		body.appendChild(div);	
+
+
+		function show() {
+			var weekday = document.querySelector("#weekday");
+			alert(weekday.value);
+			alert(weekday.options[weekday.selectedIndex].text);
+		}	*/
+	</script>
+</body>
+</html>
