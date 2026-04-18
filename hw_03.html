@@ -6,6 +6,41 @@
     <title>Document</title>
 </head>
 <body>
-    
+    請輸入日期: <br>
+    西元 <input type="number" id="year" max="9999" min="0"> 年
+    <select id="month" onchange="showDates()"></select> 月 <select id="date"></select> 日
+    <button onclick="sendFullText()">送出</button>    
+    <div id="shown"></div>  
+
+    <script>
+        function showMonths(){
+            var text = '<option selected value="1">1' ;
+            for (let i=2; i<=12; i++)
+                text += '<option value="' + i +'">' + i;
+            month.innerHTML = text;
+        }
+
+        function showDates(){            
+            var nextMonth = new Date(year.value, month.value, 1);
+            nextMonth.setDate(nextMonth.getDate()-1)
+            var text = '<option value="1">1';
+            
+            for (let i=2; i<=nextMonth.getDate(); i++)
+                text += '<option value="' + i +'">' + i;
+            //document.getElementById("date").innerHTML = text
+            date.innerHTML = text
+        }
+
+        function sendFullText(){
+            //console.log(`${year.value}-${String(month.value).padStart(2,0)}-${String(date.value).padStart(2,0)}`);
+            shown.innerHTML = 
+            `${year.value}-${String(month.value).padStart(2,0)}-${String(date.value).padStart(2,0)}`;
+        }
+
+        //window.onload =
+        year.value = new Date().getFullYear()
+        showMonths();
+        showDates();
+    </script>
 </body>
 </html>
