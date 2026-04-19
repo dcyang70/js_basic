@@ -45,7 +45,7 @@
 <body>
 
     <!-- <form action="#" method="get" enctype="multipart/form-data"> -->
-        <!-- 這個# 表示reload 的意思 -->
+    <!-- 這個# 表示reload 的意思 -->
     <form method="get" enctype="multipart/form-data">
         <fieldset>
             <legend>會員資料輸入</legend>
@@ -69,7 +69,7 @@
             </div>
             <div class="st1">
                 <label for="email" class="t1"><span style="color:red">*</span>電子信箱:</label>
-                <input type="text" name="email1" id="email" autocomplete="off">
+                <input type="text" name="email1" id="email1" autocomplete="off">
             </div>
             <div class="st1">
                 <label for="account1" class="t1"><span style="color:red">*</span>帳號:</label>
@@ -90,20 +90,20 @@
         </div>
     </form>
     <script>
-        function checkContent(){
+        function checkContent() {
             elems = document.getElementsByTagName("input")
-            for (let i of elems){
+            for (let i of elems) {
                 console.log(i, i.name, i.type, i.value);
                 if (i.type == 'text' || i.type == 'password')
-                    if (i.value === ""){
+                    if (i.value === "") {
                         let label = document.querySelector(`label[for=${i.id}]`);
                         alert(`${label.innerText} cannot be empty`);
-                        i.focus() 
+                        i.focus()
                         return
                     }
-                switch(i.id){
+                switch (i.id) {
                     case "email1":
-                        if (email1.indexOf('@') == -1 || email1.indexOf('.') == -1 ){
+                        if (email1.value.indexOf('@') == -1 || email1.value.indexOf('.') == -1) {
                             alert(`email format error`);
                             i.focus();
                             return;
@@ -118,10 +118,10 @@
                         break;
                     case "phone":
                         if (isNaN(phone.value)) {
+                            alert("phone is not a number.");
                             i.focus();
                             return;
                         }
-
                         break;
                 }
             }
